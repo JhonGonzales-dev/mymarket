@@ -8,9 +8,9 @@ class MarketApi {
   static void configureDio() {
     _dio.options.baseUrl = "https://fakestoreapi.com/";
 
-    _dio.options.connectTimeout = 5000;
+    _dio.options.connectTimeout = 10000;
     _dio.options.contentType = "application/json;charset=UTF-8";
-    _dio.options.receiveTimeout = 3000;
+    _dio.options.receiveTimeout = 8000;
   }
 
 //----METHOD GET----------------------------
@@ -20,21 +20,15 @@ class MarketApi {
     Response response;
     try {
       response = await _dio.get(path);
+      print(response);
       if (response.statusCode == 200) {
         _map["code"] = response.statusCode;
         _map["data"] = response.data;
         return _map;
       }
     } on DioError catch (e) {
-      if (e.response!.statusCode == 401) {
-        _map["code"] = e.response!.statusCode;
-        _map["data"] = "Algo salio mal";
-        return _map;
-      } else {
-        _map["code"] = 0;
-        _map["data"] = "Conexion fallida";
-        return _map;
-      }
+      _map["code"] = 0;
+      _map["data"] = "Conexion fallida";
     }
   }
 }

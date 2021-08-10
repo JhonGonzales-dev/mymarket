@@ -25,7 +25,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   Stream<CategoryState> _getCategoriesProduct(GetCategories event) async* {
     yield LoadingData();
     _map = await MarketApi.httpGet(path: '/products/categories');
-   
+
     if (_map["code"] == 200) {
       listCategory = [..._map['data']];
       yield LoadedData(category: listCategory);
