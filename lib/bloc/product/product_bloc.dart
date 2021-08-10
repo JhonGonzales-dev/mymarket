@@ -25,6 +25,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       yield* _getProducts(event);
     } else if (event is AddProduct) {
       yield* _addProducts(event);
+    } else if (event is FilterProduct) {
+      yield* _filterProducts(event);
     }
   }
 
@@ -57,5 +59,15 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     _prefs.products = listProduct.toString();
     yield LoadedProduct(products: listProduct);
     Navigator.pop(event.context);
+  }
+
+  Stream<ProductState> _filterProducts(FilterProduct event) async* {
+    List<Product> listProductFilter = [];
+    listProduct.forEach((element) {
+      if (element.category == event.nameCategory) {
+        listProductFilter.add(element);
+      }
+    });
+    yield LoadedProduct(products: listProductFilter);
   }
 }

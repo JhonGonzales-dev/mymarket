@@ -5,6 +5,12 @@ abstract class ProductEvent {}
 
 class GetProducts extends ProductEvent {}
 
+class FilterProduct extends ProductEvent {
+  final String nameCategory;
+
+  FilterProduct(this.nameCategory);
+}
+
 class AddProduct extends ProductEvent {
   final BuildContext context;
   final int id;
